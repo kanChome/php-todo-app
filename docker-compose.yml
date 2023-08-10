@@ -1,0 +1,22 @@
+version: "3"
+services:
+  php:
+    build: docker/php
+    platform: ${PHP_BUILD_PLATFORM}
+    ports:
+      - 8080:80
+    volumes:
+      - ./app/src:/var/www/html/
+
+  mysql:
+    image: mysql:8.1
+    platform: ${MYSQL_BUILD_PLATFORM}
+    restart: always
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - TZ=${DB_TZ}
